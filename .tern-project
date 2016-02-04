@@ -1,0 +1,14 @@
+{
+    "libs": [
+        "browser"
+    ],
+    "ecmaVersion": 6,
+    "plugins": {
+        "node": true,
+        "doc_comment": {
+            "fullDocs": true
+        },
+        "complete_strings": {},
+        "es_modules": true
+    }
+}
