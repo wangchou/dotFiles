@@ -4,20 +4,20 @@ set nocompatible " 設定不和舊 vi 相容，開啟 vim 進階功能支援(ps:
 " --- 插件管理 (set up vim-plug) ---
 call plug#begin('~/.config/nvim/autoload')
 
-" Making Vim look good
+" 把 Vim 變好看
 Plug 'reewr/vim-monokai-phoenix' " 仿 sublime 的配色
 Plug 'vim-airline/vim-airline' " 強大的狀態列
 Plug 'vim-airline/vim-airline-themes'
 
-" Vim as a programmer's text editor
-Plug 'scrooloose/nerdtree' " 檔案列表
+" 程式編輯器套件
+Plug 'scrooloose/nerdtree' " 支援檔案列表
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'scrooloose/syntastic' " Syntax 檢查
 Plug 'kien/ctrlp.vim' " 快速開檔
 Plug 'Raimondi/delimitMate' "對應括號
 Plug 'christoomey/vim-tmux-navigator' " 用同樣方式切換同畫面 tmux/vim tab
 Plug 'pangloss/vim-javascript' " javascript syntax and indent 插件
-Plug 'mxw/vim-jsx' " fb官方出的 jsx 插件
+Plug 'mxw/vim-jsx' " 臉書官方的 jsx 插件
 Plug 'jez/vim-c0' " C++ 支援
 Plug 'jez/vim-ispc' " C 語言支援
 Plug 'cakebaker/scss-syntax.vim' " SCSS 支援
