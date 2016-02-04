@@ -1,42 +1,34 @@
 set nocompatible " 設定不和舊 vi 相容，開啟 vim 進階功能支援
 
 
-" --- 插件管理 (set up Vundle) ---
-filetype off
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'VundleVim/Vundle.vim' " Vim 套件管理系統
+" --- 插件管理 (set up vim-plug) ---
+call plug#begin('~/.config/nvim/autoload')
 
 " Making Vim look good
-Plugin 'reewr/vim-monokai-phoenix' " 仿 sublime 的配色
-Plugin 'vim-airline/vim-airline' " 強大的狀態列
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'reewr/vim-monokai-phoenix' " 仿 sublime 的配色
+Plug 'vim-airline/vim-airline' " 強大的狀態列
+Plug 'vim-airline/vim-airline-themes'
 
 " Vim as a programmer's text editor
-Plugin 'scrooloose/nerdtree' " 檔案列表
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'scrooloose/syntastic' " Syntax 檢查
-Plugin 'kien/ctrlp.vim' " 快速開檔
-Plugin 'Raimondi/delimitMate' "對應括號
-Plugin 'christoomey/vim-tmux-navigator' " 用同樣方式切換同畫面 tmux/vim tab
-Plugin 'pangloss/vim-javascript' " javascript syntax and indent 插件
-Plugin 'mxw/vim-jsx' " fb官方出的 jsx 插件
-Plugin 'jez/vim-c0' " C++ 支援
-Plugin 'jez/vim-ispc' " C 語言支援
-Plugin 'cakebaker/scss-syntax.vim' " SCSS 支援
-Plugin 'HTML-AutoCloseTag' " 自動關HTML Tag
-Plugin 'airblade/vim-gitgutter' " 顯示這個檔的 git diff
-Plugin 'edkolev/tmuxline.vim' " 把 tmux 列融入 vim
-Plugin 'tpope/vim-fugitive' " 在 airline 顯示現在的 branch
-Plugin 'Valloric/YouCompleteMe' " 自動完成
-Plugin 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
+Plug 'scrooloose/nerdtree' " 檔案列表
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'scrooloose/syntastic' " Syntax 檢查
+Plug 'kien/ctrlp.vim' " 快速開檔
+Plug 'Raimondi/delimitMate' "對應括號
+Plug 'christoomey/vim-tmux-navigator' " 用同樣方式切換同畫面 tmux/vim tab
+Plug 'pangloss/vim-javascript' " javascript syntax and indent 插件
+Plug 'mxw/vim-jsx' " fb官方出的 jsx 插件
+Plug 'jez/vim-c0' " C++ 支援
+Plug 'jez/vim-ispc' " C 語言支援
+Plug 'cakebaker/scss-syntax.vim' " SCSS 支援
+Plug 'HTML-AutoCloseTag' " 自動關HTML Tag
+Plug 'airblade/vim-gitgutter' " 顯示這個檔的 git diff
+Plug 'edkolev/tmuxline.vim' " 把 tmux 列融入 vim
+Plug 'tpope/vim-fugitive' " 在 airline 顯示現在的 branch
+Plug 'Valloric/YouCompleteMe' " 自動完成
+Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
 
-call vundle#end()
-
-filetype plugin indent on
-
+call plug#end()
 
 " --- 一般設定 (General Setting) ---
 " 用 tab = 2 space 縮排
