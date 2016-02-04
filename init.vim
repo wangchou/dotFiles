@@ -1,4 +1,4 @@
-set nocompatible " 設定不和舊 vi 相容，開啟 vim 進階功能支援
+set nocompatible " 設定不和舊 vi 相容，開啟 vim 進階功能支援(ps: neovim 不需要這行)
 
 
 " --- 插件管理 (set up vim-plug) ---
@@ -30,6 +30,7 @@ Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
 
 call plug#end()
 
+
 " --- 一般設定 (General Setting) ---
 " 用 tab = 2 space 縮排
 set cindent
@@ -40,6 +41,8 @@ set shiftwidth=2
 set softtabstop=2
 
 set showcmd " 顯示目前 cmd 狀態 (ex: 選了幾行)
+let mapleader="\<SPACE>" " 改用空白鍵當 leader key
+set splitbelow " 畫面水平時切割放在下方
 
 "搜尋相關
 set incsearch
@@ -63,7 +66,7 @@ set mouse=a
 
 " 顏色 & 字型
 set guifont=Source\ Code\ Pro
-set t_Co=256
+set t_Co=256 " 這行要放在設 color scheme 前 (ps: neovim 不用這行)
 set background=dark
 colorscheme monokai-phoenix
 
@@ -111,7 +114,7 @@ let g:airline_powerline_fonts=1
 
 
 " --- 檔案列表設定 (jistr/vim-nerdtree-tabs) ---
-" 透過打 \t 開關檔案列表
+" 打「空白鍵 + t」開關檔案列表
 nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
 
 
@@ -120,7 +123,7 @@ let g:syntastic_error_symbol = '✘'
 let g:syntastic_warning_symbol = "▲"
 let g:syntastic_javascript_checkers = ['eslint']
 
-" 透過打 \s 開啟文法檢查
+" 打「空白鍵 + s」開啟文法檢查
 nmap <silent> <leader>s :SyntasticCheck<CR>
 augroup mySyntastic
   au!
@@ -129,7 +132,10 @@ augroup END
 
 
 " --- 快速開檔設定 (CtrlP) ---
-let g:ctrlp_map = '<c-p>'
+" 打「空白鍵 + o」開啟檔案
+nnoremap <Leader>o :CtrlP<CR>
+" 打「空白鍵 + f」開啟最近檔案
+nnoremap <Leader>f :CtrlPMRUFiles<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
@@ -147,6 +153,7 @@ augroup END
 
 " --- 自動完成 & JS 分析設定 (YouCompleteMe & Ternjs) ---
 let g:ycm_confirm_extra_conf = 0
+" 按「空白鍵 + ...」做...
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
