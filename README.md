@@ -4,9 +4,9 @@
 
 ### Color scheme Setting
 iTerm2 
-color: molokai
-Regular Font: Source Code Pro
-Non-Ascii Font: Melo for Powerline
+* color: molokai
+* Regular Font: Source Code Pro
+* Non-Ascii Font: Melo for Powerline
 
 ### 安裝 homebrew
 ```
@@ -71,5 +71,5 @@ git config --global core.editor /usr/local/bin/nvim
 
 ---
 參考：
-https://github.com/jez/vim-as-an-ide/commit/0673f0c
-https://davidosomething.com/blog/vim-for-javascript/
+* https://github.com/jez/vim-as-an-ide/commit/0673f0c
+* https://davidosomething.com/blog/vim-for-javascript/
