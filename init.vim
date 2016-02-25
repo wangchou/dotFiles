@@ -12,6 +12,7 @@ Plug 'vim-airline/vim-airline-themes'
 " 程式編輯器設定
 Plug 'scrooloose/nerdtree' " 檔案列表
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/syntastic' " 語法檢查
 Plug 'kien/ctrlp.vim' " 快速開檔
 Plug 'Raimondi/delimitMate' "對應括號
@@ -41,10 +42,9 @@ set shiftwidth=2
 set softtabstop=2
 
 set showcmd " 顯示目前 cmd 狀態 (ex: 選了幾行)
-let mapleader="\<SPACE>" " 改用空白鍵當 leader key
 set splitbelow " 畫面水平時切割放在下方
 
-set relativenumber " 讓人快速的上下移動 打行數 + j or k
+set number " 讓人快速的上下移動 打行數 + j or k
 
 "搜尋相關
 set incsearch
@@ -85,26 +85,30 @@ map <down> <nop>
 map <left> <nop>
 map <right> <nop>
 
-" 在正常模式中，按 shift 鍵大跳
-map J 10j
-map K 10k
-
 " 存檔時移除行尾空白
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 
 " 插入模式按 jj 切回正常模式
 inoremap jj <Esc>
 
-" 用空白鍵開關 fold
+" 用空白鍵開關 fold 和自動儲存 View
 nnoremap <space> za
 vnoremap <space> zf
-set foldmethod=indent
-set foldlevelstart=20
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
 
 " 移到搜尋的前/下一個時，畫面置中
 map N Nzz
 map n nzz
 
+" 用 Ctrl-n 到下個 buffer
+nnoremap <C-n> :bnext<CR>
+
+" 用 Ctrl-q 關現在的 buffer
+nnoremap <C-q> :b#<bar>bd#<CR>
+
+" 用 Ctrl + jklh 切換 vim window
+nnoremap <tab> <C-W><C-W>
 
 " ====== 插件設定 ======
 " --- 狀態列設定 (vim-airline) ---
@@ -116,8 +120,8 @@ let g:airline_powerline_fonts=1
 
 
 " --- 檔案列表設定 (jistr/vim-nerdtree-tabs) ---
-" 打「空白鍵 + t」開關檔案列表
-nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
+" 打「ctrl + t」開關檔案列表
+map <C-t> :NERDTreeToggle<CR>
 
 
 " ----- 文法檢查設定 (scrooloose/syntastic) -----
@@ -127,17 +131,22 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_check_on_wq = 0
 let g:syntastic_mode_map={"mode":"passive", "active_filetypes": [], "passive_filetypes": []}
 
-" 打「空白鍵 + s」開啟/關閉自動文法檢查 (存檔時會檢查)
-nmap <silent> <leader>s :SyntasticToggleMode<CR>
+" 打「Ctrl + s」開啟/關閉自動文法檢查 (存檔時會檢查)
+nmap <silent> <C-s> :SyntasticToggleMode<CR>
 
 
 " --- 快速開檔設定 (CtrlP) ---
-" 打「空白鍵 + o」開啟檔案
-nnoremap <Leader>o :CtrlP<CR>
-" 打「空白鍵 + f」開啟最近檔案
-nnoremap <Leader>f :CtrlPMRUFiles<CR>
+" 打「ctrl + o」開啟檔案
+nnoremap <C-o> :CtrlP<CR>
+" 打「ctrl + f」開啟最近檔案
+nnoremap <C-f> :CtrlPMRUFiles<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+" open in the new tab
+let g:ctrlp_open_func = { 'files': 'CustomOpenFunc' }
+function! CustomOpenFunc(action, line)
+    call call('ctrlp#acceptfile', [':t', a:line])
+endfunction
 
 
 " ----- 對應括號設定 (Raimondi/delimitMate settings) -----
@@ -157,3 +166,6 @@ let g:ycm_confirm_extra_conf = 0
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" 設Youcompleteme color
+highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
