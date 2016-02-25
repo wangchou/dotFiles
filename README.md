@@ -1,12 +1,10 @@
 # VIM-as-a-JS-IDE-for-Mac
 
-![alt text](https://photos-4.dropbox.com/t/2/AADmwZvmPsK5HKB2eqjMXGqNny_lTdMVg9CGGKZXsag_wA/12/20097932/jpeg/32x32/3/1455523200/0/2/Screen%20Shot%202016-02-15%20at%2011.32.23%20AM.jpg/ELXuhg8YozIgBygH/-Ff_fFEB2LAzq9zAiikFByMmD382tnJz03a-nmePk2A?size_mode=3&size=1600x1200 "sceenshot")
-
 ### Color scheme Setting
 iTerm2 
 * color: molokai
-* Regular Font: Source Code Pro
-* Non-Ascii Font: Melo for Powerline
+* Regular Font: [Inconsolata 16pt](https://github.com/google/fonts/blob/master/ofl/inconsolata/Inconsolata-Regular.ttf)
+* Non-Ascii Font: [Melo for Powerline 13pt](https://gist.github.com/justinmayer/7537418)
 
 ### 安裝 homebrew
 ```
