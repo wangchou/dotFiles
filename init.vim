@@ -67,7 +67,7 @@ set regexpengine=1
 set mouse=a
 
 " 顏色 & 字型
-set guifont=Source\ Code\ Pro
+set guifont=Inconsolata
 set t_Co=256 " 這行要放在設 color scheme 前 (ps: neovim 不用這行)
 set background=dark
 colorscheme monokai-phoenix
@@ -77,7 +77,6 @@ syntax enable
 
 " 設訂狀態列 for airline 插件
 set laststatus=2
-
 
 " 在正常模式中，封鎖方向鍵
 map <up> <nop>
@@ -91,9 +90,11 @@ autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 " 插入模式按 jj 切回正常模式
 inoremap jj <Esc>
 
-" 用空白鍵開關 fold 和自動儲存 View
-nnoremap <space> za
-vnoremap <space> zf
+" 按 f 開關 fold
+nnoremap f za
+vnoremap f zf
+
+" 自動儲存 View
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
@@ -120,8 +121,8 @@ let g:airline_powerline_fonts=1
 
 
 " --- 檔案列表設定 (jistr/vim-nerdtree-tabs) ---
-" 打「ctrl + t」開關檔案列表
-map <C-t> :NERDTreeToggle<CR>
+" 打「空白鍵」開關檔案列表
+map <space> :NERDTreeToggle<CR>
 
 
 " ----- 文法檢查設定 (scrooloose/syntastic) -----
@@ -131,7 +132,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_check_on_wq = 0
 let g:syntastic_mode_map={"mode":"passive", "active_filetypes": [], "passive_filetypes": []}
 
-" 打「Ctrl + s」開啟/關閉自動文法檢查 (存檔時會檢查)
+" 打「ctrl + s」開啟/關閉自動文法檢查 (存檔時會檢查)
 nmap <silent> <C-s> :SyntasticToggleMode<CR>
 
 
@@ -142,12 +143,6 @@ nnoremap <C-o> :CtrlP<CR>
 nnoremap <C-f> :CtrlPMRUFiles<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
-" open in the new tab
-let g:ctrlp_open_func = { 'files': 'CustomOpenFunc' }
-function! CustomOpenFunc(action, line)
-    call call('ctrlp#acceptfile', [':t', a:line])
-endfunction
-
 
 " ----- 對應括號設定 (Raimondi/delimitMate settings) -----
 let delimitMate_expand_cr = 1
@@ -162,7 +157,7 @@ augroup END
 
 " --- 自動完成 & JS 分析設定 (YouCompleteMe & Ternjs) ---
 let g:ycm_confirm_extra_conf = 0
-" 按「空白鍵 + ...」做...
+" 按「leader key + ...」做...
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
