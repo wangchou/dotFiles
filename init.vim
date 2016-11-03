@@ -28,6 +28,7 @@ Plug 'edkolev/tmuxline.vim' " 把 tmux 列融入 vim
 Plug 'tpope/vim-fugitive' " 在 airline 顯示現在的 branch
 Plug 'Valloric/YouCompleteMe' " 自動完成
 Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
+Plug 'repmo.vim' " 重複上次的移動
 
 call plug#end()
 
@@ -91,12 +92,12 @@ autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 inoremap jj <Esc>
 
 " 按 f 開關 fold
-nnoremap f za
-vnoremap f zf
+"nnoremap f za
+"vnoremap f zf
 
 " 自動儲存 View
 autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+autocmd BufWinEnter *.* silent! loadview
 
 " 移到搜尋的前/下一個時，畫面置中
 map N Nzz
@@ -116,8 +117,11 @@ nnoremap <tab> <C-W><C-W>
 let g:airline#extensions#hunks#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts=1
+let g:airline_section_x=0
+let g:airline_section_y=0
+let g:airline_section_error=0
+let g:airline_section_warning=0
 
 
 " --- 檔案列表設定 (jistr/vim-nerdtree-tabs) ---
