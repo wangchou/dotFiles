@@ -91,9 +91,14 @@ autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 " 插入模式按 jj 切回正常模式
 inoremap jj <Esc>
 
+" for JS Folding
+syntax region foldBraces start=/{/ end=/}/ transparent fold keepend extend
+setlocal foldmethod=syntax
+
 " 按 f 開關 fold
-"nnoremap f za
-"vnoremap f zf
+nnoremap f za
+vnoremap f zf
+
 
 " 自動儲存 View
 autocmd BufWinLeave *.* mkview
