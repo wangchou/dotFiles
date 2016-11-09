@@ -127,6 +127,18 @@ let g:airline_section_x=0
 let g:airline_section_y=0
 let g:airline_section_error=0
 let g:airline_section_warning=0
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+" http://joshldavis.com/2014/04/05/vim-tab-madness-buffers-vs-tabs/
+" about the buffer
+set hidden
+nmap <leader>T :enew<cr>
+nmap <leader>l :bnext<CR>
+nmap <leader>h :bprevious<CR>
+nmap <leader>bq :bp <BAR> bd #<CR>
+nmap <leader>bl :ls<CR>
+
 
 
 " --- 檔案列表設定 (jistr/vim-nerdtree-tabs) ---
