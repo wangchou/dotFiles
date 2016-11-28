@@ -133,13 +133,17 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " http://joshldavis.com/2014/04/05/vim-tab-madness-buffers-vs-tabs/
 " about the buffer
 set hidden
+" nmap <tab> :bnext<cr>
 nmap <leader>T :enew<cr>
 nmap <leader>l :bnext<CR>
 nmap <leader>h :bprevious<CR>
 nmap <leader>bq :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
 
-
+" bind K to grep word under cursor in the folder
+nnoremap K :silent grep -r <C-R><C-W> . <CR>:copen<CR>
+" close the quickfix window after selection
+:autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
 " --- 檔案列表設定 (jistr/vim-nerdtree-tabs) ---
 " 打「空白鍵」開關檔案列表
