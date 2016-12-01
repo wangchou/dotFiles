@@ -82,8 +82,8 @@ set laststatus=2
 " 在正常模式中，封鎖方向鍵
 map <up> <nop>
 map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+map <left> :bprevious<CR>
+map <right> :bnext<CR>
 
 " 存檔時移除行尾空白
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
@@ -141,7 +141,11 @@ nmap <leader>bq :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
 
 " bind K to grep word under cursor in the folder
-nnoremap K :silent grep -r <C-R><C-W> . <CR>:copen<CR>
+nnoremap K :silent grep -rI --exclude-dir={tmp,node_modules} <C-R><C-W> . <CR>:copen<CR>
+
+" bind J to CtrlP word under cursor in the folder
+nmap J :CtrlP<CR><C-\>w
+
 " close the quickfix window after selection
 :autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
