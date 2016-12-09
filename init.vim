@@ -29,6 +29,8 @@ Plug 'tpope/vim-fugitive' " 在 airline 顯示現在的 branch
 Plug 'Valloric/YouCompleteMe' " 自動完成
 Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
 Plug 'repmo.vim' " 重複上次的移動
+Plug 'tpope/vim-rails' " rails plugin
+Plug 'tpope/vim-bundler' " ruby bundler plugin
 
 call plug#end()
 
@@ -98,7 +100,13 @@ setlocal foldmethod=manual
 nnoremap f za
 vnoremap f zf
 
-nnoremap { $%v%
+" type % to matching the html tag
+runtime macros/matchit.vim
+" type } quick select the html tag scope under cursor
+nmap } ^lv%f
+
+" quick select the match brakets
+nnoremap { $%v%f
 
 " 自動儲存 View
 autocmd BufWinLeave *.* mkview
@@ -120,7 +128,7 @@ nnoremap <tab> <C-W><C-W>
 " ====== 插件設定 ======
 " --- 狀態列設定 (vim-airline) ---
 let g:airline#extensions#hunks#enabled = 1
-let g:airline#extensions#tmuxline#enabled = 1
+let g:airline#extensions#tmuxline#enabled = 0
 let g:airline#extensions#branch#enabled = 1
 let g:airline_powerline_fonts=1
 let g:airline_section_x=0
@@ -141,10 +149,30 @@ nmap <leader>bq :bp <BAR> bd #<CR>
 nmap <leader>bl :ls<CR>
 
 " bind K to grep word under cursor in the folder
-nnoremap K :silent grep -rI --exclude-dir={tmp,node_modules} <C-R><C-W> . <CR>:copen<CR>
+nnoremap K :silent grep -rI --exclude-dir={tmp,node_modules,.happypack,log} <C-R><C-W> . <CR>:copen<CR>
+nnoremap L :silent grep -rI --exclude-dir={tmp,node_modules,.happypack,log} .
 
 " bind J to CtrlP word under cursor in the folder
 nmap J :CtrlP<CR><C-\>w
+
+" bind M to grep word under cursor in the all open buffer
+" from http://vi.stackexchange.com/questions/2904/how-to-show-search-results-for-all-open-buffers
+function! BuffersList()
+  let all = range(0, bufnr('$'))
+  let res = []
+  for b in all
+    if buflisted(b)
+      call add(res, bufname(b))
+    endif
+  endfor
+  return res
+endfunction
+
+function! GrepBuffers (expression)
+  exec 'vimgrep/'.a:expression.'/ '.join(BuffersList())
+endfunction
+
+nnoremap M :call GrepBuffers("<C-R><C-W>")<CR>:copen<CR>
 
 " close the quickfix window after selection
 :autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
