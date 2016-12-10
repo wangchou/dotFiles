@@ -31,6 +31,7 @@ Plug 'tpope/vim-bundler' " ruby bundler plugin
 Plug 'mileszs/ack.vim' " faster search
 Plug 'mattn/gist-vim' " create gist by current buffer by type :Gist
 Plug 'mattn/webapi-vim' " needed by gist-vim
+Plug 'kshenoy/vim-signature' " show marks
 
 call plug#end()
 
@@ -78,11 +79,15 @@ colorscheme monokai-phoenix
 " 文法開啟
 syntax enable
 
-" 在正常模式中，封鎖方向鍵
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+" 用方向鍵, 上下移動 mark, 左右切換 buffer
+map K [`
+map J ]`
+map H :bprevious<CR>
+map L :bnext<CR>
+map <up> [`
+map <down> ]`
+map <left> :bprevious<CR>
+map <right> :bnext<CR>
 
 " 設訂狀態列 for airline 插件
 set laststatus=2
@@ -133,7 +138,7 @@ nnoremap <tab> <C-W><C-W>
 set hidden
 nmap <leader>n :bnext<CR>
 nmap <leader>bq :bp <BAR> bd #<CR>
-nmap <leader>bl :ls<CR>
+nmap <leader>bl :ls<CR>:b<Space>
 
 " close the quickfix window after selection
 :autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
