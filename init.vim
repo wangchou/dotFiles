@@ -35,10 +35,38 @@ Plug 'kshenoy/vim-signature' " show marks
 
 call plug#end()
 
-" --- 一般設定 (General Setting) ---
-" set leader key to comma
+" ========= 快捷鍵 (Shortcut) ==========
 let mapleader = ","
+" buffer
+map H :bprevious<CR>
+map L :bnext<CR>
+nmap <leader>q :bp <BAR> bd #<CR>
+nmap <leader>l :b#<CR>
+nmap <leader>bl :ls<CR>:b<Space>
+" search
+nnoremap <leader>k :Ack <C-R><C-W> <CR>
+nnoremap <leader>a :Ack<space>
+" open file
+let g:ctrlp_map = '<leader>f'
+nnoremap <C-o> :CtrlP<CR>
+nnoremap <C-f> :CtrlPMRUFiles<CR>
+nmap <leader>j :CtrlP<CR><C-\>w
+" select & folding
+nnoremap f za
+vnoremap f zf
+nnoremap { $%v%
+nmap } ^lv%f
+" marks
+map K [`
+map J ]`
+" others
+map <leader>b :Gblame<cr>
+map <space> :NERDTreeToggle<CR>
+nnoremap <tab> <C-W><C-W>
+inoremap jj <Esc>
 
+
+" ====== vim 設定 ======
 " 用 tab = 2 space 縮排
 set cindent
 set expandtab
@@ -50,7 +78,13 @@ set showcmd " 顯示目前 cmd 狀態 (ex: 選了幾行)
 set splitbelow " 畫面水平時切割放在下方
 set number " 讓人快速的上下移動 打行數 + j or k
 
-"搜尋相關
+" 禁用方向鍵
+map <left> <nop>
+map <right> <nop>
+map <up> <nop>
+map <down> <nop>
+
+" 搜尋相關
 set incsearch
 set showmatch
 set hlsearch
@@ -79,16 +113,6 @@ colorscheme monokai-phoenix
 " 文法開啟
 syntax enable
 
-" 用方向鍵, 上下移動 mark, 左右切換 buffer
-map K [`
-map J ]`
-map H :bprevious<CR>
-map L :bnext<CR>
-map <up> [`
-map <down> ]`
-map <left> :bprevious<CR>
-map <right> :bnext<CR>
-
 " 設訂狀態列 for airline 插件
 set laststatus=2
 
@@ -98,50 +122,25 @@ autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 " set clipboard work with tmux
 set clipboard=unnamedplus
 
-" 插入模式按 jj 切回正常模式
-inoremap jj <Esc>
-
 " for JS Folding
 setlocal foldmethod=manual
 
-" 按 f 開關 fold
-nnoremap f za
-vnoremap f zf
-
 " type % to matching the html tag
 runtime macros/matchit.vim
-" type } quick select the html tag scope under cursor
-nmap } ^lv%f
-
-" quick select the match brakets
-nnoremap { $%v%f
 
 " 自動儲存 View
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent! loadview
 
-" 快速搜尋，用當前指標的字搜尋
-let g:ackprg = 'ag --nogroup --nocolor --column'
-nnoremap <leader>k :Ack <C-R><C-W> <CR>
-nnoremap <leader>a :Ack<space>
-nmap <leader>j :CtrlP<CR><C-\>w
-
 " 移到搜尋的前/下一個時，畫面置中
 map N Nzz
 map n nzz
 
-" 用 Ctrl + jklh 切換 vim window
-nnoremap <tab> <C-W><C-W>
-
-" about the buffer
-" http://joshldavis.com/2014/04/05/vim-tab-madness-buffers-vs-tabs/
 set hidden
-nmap <leader>n :bnext<CR>
-nmap <leader>bq :bp <BAR> bd #<CR>
-nmap <leader>bl :ls<CR>:b<Space>
 
 " close the quickfix window after selection
 :autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+
 
 " ====== 插件設定 ======
 " --- 狀態列設定 (vim-airline) ---
@@ -156,28 +155,16 @@ let g:airline_section_warning=0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-" --- 狀態列設定 (vim-fugitive) ---
-" map git commands
-map <leader>b :Gblame<cr>
-map <leader>l :!clear && git log -p %<cr>
-map <leader>d :!clear && git diff %<cr>
-
-" --- 檔案列表設定 (jistr/vim-nerdtree-tabs) ---
-" 打「空白鍵」開關檔案列表
-map <space> :NERDTreeToggle<CR>
-
 " --- 快速開檔設定 (CtrlP) ---
-" 打「ctrl + o」開啟檔案
-nnoremap <C-o> :CtrlP<CR>
-" 打「ctrl + f」開啟最近檔案
-nnoremap <C-f> :CtrlPMRUFiles<CR>
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
-let g:ctrlp_map = '<leader>f'
 let g:ctrlp_max_height = 30
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""' " use silver search
+
+" --- 搜尋 (ack) ---
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " ----- 對應括號設定 (Raimondi/delimitMate settings) -----
 let delimitMate_expand_cr = 1
