@@ -32,6 +32,7 @@ Plug 'mileszs/ack.vim' " faster search
 Plug 'mattn/gist-vim' " create gist by current buffer by type :Gist
 Plug 'mattn/webapi-vim' " needed by gist-vim
 Plug 'kshenoy/vim-signature' " show marks
+Plug 'rizzatti/dash.vim' " Mac dash doc app
 
 call plug#end()
 
@@ -43,8 +44,10 @@ map L :bnext<CR>
 nmap <leader>q :bp <BAR> bd #<CR>
 nmap <leader>l :b#<CR>
 nmap <leader>bl :ls<CR>:b<Space>
+nmap <leader>b :CtrlPBuffer<CR>
 " search
 nnoremap <leader>k :Ack <C-R><C-W> <CR>
+vnoremap <leader>k y:Ack <C-R>"<CR>
 nnoremap <leader>a :Ack<space>
 " open file
 let g:ctrlp_map = '<leader>f'
@@ -60,7 +63,6 @@ nmap } ^lv%f
 map K [`
 map J ]`
 " others
-map <leader>b :Gblame<cr>
 map <space> :NERDTreeToggle<CR>
 nnoremap <tab> <C-W><C-W>
 inoremap jj <Esc>
