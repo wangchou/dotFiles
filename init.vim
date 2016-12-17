@@ -33,6 +33,7 @@ Plug 'mattn/gist-vim' " create gist by current buffer by type :Gist
 Plug 'mattn/webapi-vim' " needed by gist-vim
 Plug 'kshenoy/vim-signature' " show marks
 Plug 'rizzatti/dash.vim' " Mac dash doc app
+Plug 'jeetsukumaran/vim-buffergator' " nerdtree like buffer navigator
 
 call plug#end()
 
@@ -44,7 +45,7 @@ map L :bnext<CR>
 nmap <leader>q :bp <BAR> bd #<CR>
 nmap <leader>l :b#<CR>
 nmap <leader>bl :ls<CR>:b<Space>
-nmap <leader>b :CtrlPBuffer<CR>
+nmap <leader>, :BuffergatorToggle<CR>
 " search
 nnoremap <leader>k :Ack <C-R><C-W> <CR>
 vnoremap <leader>k y:Ack <C-R>"<CR>
@@ -154,8 +155,6 @@ let g:airline_section_x=0
 let g:airline_section_y=0
 let g:airline_section_error=0
 let g:airline_section_warning=0
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
 
 " --- 快速開檔設定 (CtrlP) ---
 let g:ctrlp_cmd = 'CtrlP'
