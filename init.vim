@@ -31,9 +31,10 @@ Plug 'tpope/vim-bundler' " ruby bundler plugin
 Plug 'mileszs/ack.vim' " faster search
 Plug 'mattn/gist-vim' " create gist by current buffer by type :Gist
 Plug 'mattn/webapi-vim' " needed by gist-vim
-Plug 'kshenoy/vim-signature' " show marks
+"Plug 'kshenoy/vim-signature' " show marks
 Plug 'rizzatti/dash.vim' " Mac dash doc app
 Plug 'jeetsukumaran/vim-buffergator' " nerdtree like buffer navigator
+Plug 'vim-scripts/delview'
 
 call plug#end()
 
@@ -45,7 +46,7 @@ map L :bnext<CR>
 nmap <leader>q :bp <BAR> bd #<CR>
 nmap <leader>l :b#<CR>
 nmap <leader>bl :ls<CR>:b<Space>
-nmap <leader>, :BuffergatorToggle<CR>
+map <leader>, :BuffergatorToggle<CR>
 " search
 nnoremap <leader>k :Ack <C-R><C-W> <CR>
 vnoremap <leader>k y:Ack <C-R>"<CR>
@@ -64,18 +65,16 @@ nmap } ^lv%f
 map K [`
 map J ]`
 " others
-map <space> :NERDTreeToggle<CR>
+nmap <space> :NERDTreeToggle<CR>
 nnoremap <tab> <C-W><C-W>
 inoremap jj <Esc>
 
 
 " ====== vim 設定 ======
 " 用 tab = 2 space 縮排
+set tabstop=2 shiftwidth=2 expandtab
 set cindent
-set expandtab
 set smarttab
-set tabstop=2
-set shiftwidth=2
 set softtabstop=2
 set showcmd " 顯示目前 cmd 狀態 (ex: 選了幾行)
 set splitbelow " 畫面水平時切割放在下方
