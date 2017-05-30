@@ -23,18 +23,13 @@ Plug 'cakebaker/scss-syntax.vim' " SCSS 支援
 Plug 'HTML-AutoCloseTag' " 自動關HTML Tag
 Plug 'edkolev/tmuxline.vim' " 把 tmux 列融入 vim
 Plug 'tpope/vim-fugitive' " 在 airline 顯示現在的 branch
-Plug 'Valloric/YouCompleteMe' " 自動完成
-Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
 Plug 'repmo.vim' " 重複上次的移動
-Plug 'tpope/vim-rails' " rails plugin
-Plug 'tpope/vim-bundler' " ruby bundler plugin
 Plug 'mileszs/ack.vim' " faster search
 Plug 'mattn/gist-vim' " create gist by current buffer by type :Gist
-Plug 'mattn/webapi-vim' " needed by gist-vim
-"Plug 'kshenoy/vim-signature' " show marks
-Plug 'rizzatti/dash.vim' " Mac dash doc app
 Plug 'jeetsukumaran/vim-buffergator' " nerdtree like buffer navigator
 Plug 'vim-scripts/delview'
+Plug 'Valloric/YouCompleteMe' " 自動完成
+Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
 
 call plug#end()
 
@@ -48,9 +43,9 @@ nmap <leader>l :b#<CR>
 nmap <leader>bl :ls<CR>:b<Space>
 map <leader>, :BuffergatorToggle<CR>
 " search
-nnoremap <leader>k :Ack <C-R><C-W> <CR>
-vnoremap <leader>k y:Ack <C-R>"<CR>
-nnoremap <leader>a :Ack<space>
+nnoremap <leader>k :Ack! <C-R><C-W> <CR>
+vnoremap <leader>k y:Ack! <C-R>"<CR>
+nnoremap <leader>a :Ack!<space>
 " open file
 let g:ctrlp_map = '<leader>f'
 nnoremap <C-o> :CtrlP<CR>
@@ -164,7 +159,9 @@ let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""' " use silver search
 
 " --- 搜尋 (ack) ---
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'ag --vimgrep' " much faster silver search
+let g:ackhighlight = 1
+let g:ack_qhandler = "botright copen 20"
 
 " ----- 對應括號設定 (Raimondi/delimitMate settings) -----
 let delimitMate_expand_cr = 1
