@@ -135,6 +135,11 @@ map n nzz
 
 set hidden
 
+" crosshairs (highlight 欄和列)
+hi CursorLine   cterm=NONE ctermbg=235
+hi CursorColumn cterm=NONE ctermbg=235
+nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+
 " close the quickfix window after selection
 :autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
