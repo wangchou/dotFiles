@@ -26,11 +26,30 @@ alias tokyo='ssh -i tokyo_need_for_speed.pem ubuntu@54.199.254.225'
 alias tt='ssh -i tokyo_need_for_speed.pem -D 2001 -f -C -q -N ubuntu@54.199.254.225' # ssh tunneling vpn
 
 # npm & yarn
-alias r='npm run local'
-alias nt='npm t'
-alias ni='npm i'
-alias yt='yarn t'
-alias yi='yarn i'
+function r = {
+  tmp=`git ls-files|grep yarn.lock`
+  if [ $? -eq 0 ]; then
+    yarn run local
+  else
+    npm run local
+  fi
+}
+function i = {
+  tmp=`git ls-files|grep yarn.lock`
+  if [ $? -eq 0 ]; then
+    yarn install
+  else
+    npm i
+  fi
+}
+function t = {
+  tmp=`git ls-files|grep yarn.lock`
+  if [ $? -eq 0 ]; then
+    yarn t
+  else
+    npm t
+  fi
+}
 
 # webpack
 export WEBPACK_HAPPY_CACHE_ENABLED=1
