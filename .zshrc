@@ -11,6 +11,7 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:phantomjs
 # misc shortcut
 alias siri='say hey siri;say '
 alias h='history'
+alias hg='history|grep'
 alias s='source ~/.zshrc'
 alias z='vim ~/.zshrc'
 
@@ -25,10 +26,9 @@ alias tokyo='ssh -i tokyo_need_for_speed.pem ubuntu@54.199.254.225'
 alias tt='ssh -i tokyo_need_for_speed.pem -D 2001 -f -C -q -N ubuntu@54.199.254.225' # ssh tunneling vpn
 
 # npm & yarn
-alias nl='npm run local'
+alias r='npm run local'
 alias nt='npm t'
 alias ni='npm i'
-alias yl='yarn run local'
 alias yt='yarn t'
 alias yi='yarn i'
 
