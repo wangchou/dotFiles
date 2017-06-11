@@ -180,11 +180,14 @@ augroup END
 
 " --- 自動完成 & JS 分析設定 (YouCompleteMe & Ternjs) ---
 let g:ycm_confirm_extra_conf = 0
-" 按「leader key + ...」做...
-nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " 設Youcompleteme color
 highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
+
+" 按「leader key + ...」做...
+" go to definition
+nnoremap <leader>d :TernDef<CR>|
+
+" rename variable under cursor
+nnoremap <leader>r :TernRename<CR>
 
