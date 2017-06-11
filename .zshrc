@@ -44,9 +44,11 @@ alias rh='git reset HEAD --hard'
 alias rhd='git reset HEAD --hard;git checkout develop'
 alias gl="git log --format='%Cgreen%h%Creset %C(cyan)%an%Creset - %s' --graph"
 alias gl2="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias branchName="git branch | grep \* | cut -d ' ' -f2"
-alias push="git push origin $(branchName)"
-alias fpush="git push -f origin $(branchName)"
+function push = {
+  local currentBranchName="$(git branch | grep \* | cut -d ' ' -f2)"
+  git push origin ${currentBranchName}
+}
+alias fpush = "git push -f origin " # type the force push branch name manually
 alias gs="git status"
 alias am="git add .;git commit"
 
