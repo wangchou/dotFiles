@@ -167,7 +167,6 @@ let g:ack_qhandler = "botright copen 20"
 let g:buffergator_show_full_directory_path = 0 " use relative path
 let g:buffergator_sort_regime = 'filepath' " sort buffer file by path
 let g:buffergator_split_size = 60 " buffer window width
-let g:buffergator_autoupdate = 1 " update when buffer changes
 
 " ----- 對應括號設定 (Raimondi/delimitMate settings) -----
 let delimitMate_expand_cr = 1
@@ -188,3 +187,4 @@ nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " 設Youcompleteme color
 highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
+

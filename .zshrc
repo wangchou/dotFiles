@@ -48,9 +48,9 @@ function push = {
   local currentBranchName="$(git branch | grep \* | cut -d ' ' -f2)"
   git push origin ${currentBranchName}
 }
-alias fpush = "git push -f origin " # type the force push branch name manually
+alias fpush="git push -f origin " # type the force push branch name manually
 alias gs="git status"
-alias am="git add .;git commit"
+alias am="git add .;git commit -m "
 
 # tree
 alias dl="tree -d -L 1"
