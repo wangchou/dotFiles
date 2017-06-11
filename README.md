@@ -21,20 +21,22 @@ xcode-select --install
 brew install neovim/neovim/neovim
 ```
 
-### 安裝 vim-plug
-```
+### 安裝 neovim plugin by VimPlug
+```bash
 curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-```
-
-### 下載 init.vim 設定檔
-放到 ~/.config/nvim/init.vim
-
-### 打開 neovim 安裝
+cp init.vim ~/.config/nvim/init.vim # download init.vim from this repo
+vim
 :PlugInstall
-
-### 編譯 YouCompleteMe
-安裝 python 2.7 & pip
 ```
+
+### setup YouCompleteMe and tern-js
+安裝 tern-js
+```bash
+cd ~/.config/nvim/autoload/tern_for_vim;npm install
+```
+
+安裝 python 2.7 & pip
+```bash
 pip install neovim
 cd ~/.config/nvim/autoload/plugged/YouCompleteMe
 ./install.py --clang-completer --tern-completer
@@ -42,18 +44,15 @@ cd ~/.config/nvim/autoload/plugged/YouCompleteMe
 
 ps: 如果這步用 nvm 安裝的 node 會有問題，要這樣...
 VIM setting for YouCompleteMe and TernJS
-```
+```bash
 ln -s `which node` /usr/local/bin/node
 ln -s `which npm` /usr/local/bin/npm
 ln -s `which tern` /usr/local/bin/tern
 ln -s `which eslint` /usr/local/bin/eslint
 ```
 
-### 安裝文法檢查 Syntastic
-必須把 eslint, eslintxxxreact, eslintxxxairbnb 都用 npm -g install
-
 ### 建立 Symbolic link
-```
+```bash
 brew uninstall vim
 ln /usr/local/bin/nvim /usr/local/bin/vim
 mv ~/.vim ~/.old.vim
@@ -63,7 +62,7 @@ ln -s ~/.config/nvim/init.vim ~/.vimrc
 ```
 
 ### git config
-```
+```bash
 git config --global core.editor /usr/local/bin/nvim
 ```
 
