@@ -55,6 +55,7 @@ function t = {
 export WEBPACK_HAPPY_CACHE_ENABLED=1
 export WEBPACK_BREAKPOINT_DISABLED=1
 export WEBPACK_HAPPY_THREAD_SIZE=4
+export WEBPACK_HARD_SOURCE_ENABLED=1
 
 # git shortcuts
 alias d='git checkout develop'
@@ -67,7 +68,6 @@ function push = {
   local currentBranchName="$(git branch | grep \* | cut -d ' ' -f2)"
   git push origin ${currentBranchName}
 }
-alias fpush="git push -f origin " # type the force push branch name manually
 alias gs="git status"
 alias am="git add .;git commit -m "
 
