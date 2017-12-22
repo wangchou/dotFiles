@@ -30,35 +30,65 @@ Plug 'jeetsukumaran/vim-buffergator' " nerdtree like buffer navigator
 Plug 'vim-scripts/delview'
 Plug 'Valloric/YouCompleteMe' " 自動完成
 Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
+Plug 'itchyny/calendar.vim' " 日曆 & todo
 
 call plug#end()
 
 " ========= 快捷鍵 (Shortcut) ==========
+" , 當 vim 的 leader key
+"
+" ,q        關掉當前 buffer
+" ,l        到前一個 buffer
+" ,bl       顯示 buffer 列表
+" ,,        到下個檔案 buffer
+"
+" ,k        用 cursor 下的字做全域搜尋
+" ,a        全域搜尋
+"
+" ctrl + o  搜尋檔名
+" ctrl + f  搜尋最近的檔案
+" ,j        用 cursor 下的字搜尋檔案
+"
+" ,f        fold and unfold
+" {         全選 block 內的行數
+"
+" K         移到前一個 mark
+" J         移到下一個 mark
+"
+" space     開關 nerdtree
+"
+" tab       切換到下個 window
+"
+" jj        回到 normal mode
+
 let mapleader = ","
+
 " buffer
-map H :bprevious<CR>
-map L :bnext<CR>
 nmap <leader>q :bp <BAR> bd #<CR>
 nmap <leader>l :b#<CR>
 nmap <leader>bl :ls<CR>:b<Space>
-map <leader>, :BuffergatorToggle<CR>
+map <leader>, :bnext<CR>
+
 " search
 nnoremap <leader>k :Ack! <C-R><C-W> <CR>
 vnoremap <leader>k y:Ack! <C-R>"<CR>
-nnoremap <leader>a :Ack!<space>
+nnoremap <leader>a :Ack! --smart-case -m 30<space>
+
 " open file
-let g:ctrlp_map = '<leader>f'
 nnoremap <C-o> :CtrlP<CR>
 nnoremap <C-f> :CtrlPMRUFiles<CR>
 nmap <leader>j :CtrlP<CR><C-\>w
+
 " select & folding
-nnoremap f za
-vnoremap f zf
+nnoremap <leader>f za
+vnoremap <leader>f zf
 nnoremap { $%v%
 nmap } ^lv%f
+
 " marks
 map K [`
 map J ]`
+
 " others
 nmap <space> :NERDTreeToggle<CR>
 nnoremap <tab> <C-W><C-W>
