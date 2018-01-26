@@ -13,24 +13,19 @@ Plug 'scrooloose/nerdtree' " 檔案列表
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'kien/ctrlp.vim' " 快速開檔
-Plug 'Raimondi/delimitMate' "對應括號
 Plug 'christoomey/vim-tmux-navigator' " 用同樣方式切換同畫面 tmux/vim tab
 Plug 'pangloss/vim-javascript' " javascript 語法和縮排的插件
-Plug 'mxw/vim-jsx' " 臉書官方出的 jsx 插件
 Plug 'jez/vim-c0' " C++ 支援
 Plug 'jez/vim-ispc' " C 語言支援
 Plug 'cakebaker/scss-syntax.vim' " SCSS 支援
-Plug 'HTML-AutoCloseTag' " 自動關HTML Tag
 Plug 'edkolev/tmuxline.vim' " 把 tmux 列融入 vim
-Plug 'tpope/vim-fugitive' " 在 airline 顯示現在的 branch
-Plug 'repmo.vim' " 重複上次的移動
 Plug 'mileszs/ack.vim' " faster search
-Plug 'mattn/gist-vim' " create gist by current buffer by type :Gist
 Plug 'jeetsukumaran/vim-buffergator' " nerdtree like buffer navigator
 Plug 'vim-scripts/delview'
 Plug 'Valloric/YouCompleteMe' " 自動完成
 Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
-Plug 'itchyny/calendar.vim' " 日曆 & todo
+Plug 'maxmellon/vim-jsx-pretty'
+
 
 call plug#end()
 
@@ -39,8 +34,7 @@ call plug#end()
 "
 " ,q        關掉當前 buffer
 " ,l        到前一個 buffer
-" ,bl       顯示 buffer 列表
-" ,,        到下個檔案 buffer
+" ,,       顯示 buffer 列表
 "
 " ,k        用 cursor 下的字做全域搜尋
 " ,a        全域搜尋
@@ -67,7 +61,7 @@ let mapleader = ","
 nmap <leader>q :bp <BAR> bd #<CR>
 nmap <leader>l :b#<CR>
 nmap <leader>bl :ls<CR>:b<Space>
-map <leader>, :bnext<CR>
+map <leader>, :BuffergatorTabsOpen<CR>
 
 " search
 nnoremap <leader>k :Ack! <C-R><C-W> <CR>
@@ -201,17 +195,8 @@ let g:ack_qhandler = "botright copen 20"
 " --- Vim buffernavigator ---
 let g:buffergator_show_full_directory_path = 0 " use relative path
 let g:buffergator_sort_regime = 'filepath' " sort buffer file by path
-let g:buffergator_split_size = 60 " buffer window width
+let g:buffergator_split_size = 30 " buffer window width
 
-" ----- 對應括號設定 (Raimondi/delimitMate settings) -----
-let delimitMate_expand_cr = 1
-augroup mydelimitMate
-  au!
-  au FileType markdown let b:delimitMate_nesting_quotes = ["`"]
-  au FileType tex let b:delimitMate_quotes = ""
-  au FileType tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
-  au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
-augroup END
 
 " --- 自動完成 & JS 分析設定 (YouCompleteMe & Ternjs) ---
 let g:ycm_confirm_extra_conf = 0
@@ -226,3 +211,16 @@ nnoremap <leader>d :TernDef<CR>|
 " rename variable under cursor
 nnoremap <leader>r :TernRename<CR>
 
+" vim-jsx-pretty highlight jsx like html
+let g:vim_jsx_pretty_enable_jsx_highlight = 0
+
+highlight def link jsxTag Label
+highlight def link jsxTagName Label
+highlight def link jsxCloseTag Label
+highlight def link jsxCloseString Label
+
+highlight def link jsxString String
+highlight def link jsxNameSpace Function
+highlight def link jsxComment Error
+highlight def link jsxAttrib Identifier
+highlight def link jsxEscapeJs jsxEscapeJs
