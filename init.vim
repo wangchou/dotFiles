@@ -22,9 +22,11 @@ Plug 'edkolev/tmuxline.vim' " 把 tmux 列融入 vim
 Plug 'mileszs/ack.vim' " faster search
 Plug 'jeetsukumaran/vim-buffergator' " nerdtree like buffer navigator
 Plug 'vim-scripts/delview'
-Plug 'Valloric/YouCompleteMe' " 自動完成
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " 自動完成
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " 自動完成
 Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'w0rp/ale' " linter error and fix
 
 
 call plug#end()
@@ -87,7 +89,6 @@ map J ]`
 nmap <space> :NERDTreeToggle<CR>
 nnoremap <tab> <C-W><C-W>
 inoremap jj <Esc>
-
 
 " ====== vim 設定 ======
 " 用 tab = 2 space 縮排
@@ -197,13 +198,6 @@ let g:buffergator_show_full_directory_path = 0 " use relative path
 let g:buffergator_sort_regime = 'filepath' " sort buffer file by path
 let g:buffergator_split_size = 30 " buffer window width
 
-
-" --- 自動完成 & JS 分析設定 (YouCompleteMe & Ternjs) ---
-let g:ycm_confirm_extra_conf = 0
-
-" 設Youcompleteme color
-highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
-
 " 按「leader key + ...」做...
 " go to definition
 nnoremap <leader>d :TernDef<CR>|
@@ -224,3 +218,21 @@ highlight def link jsxNameSpace Function
 highlight def link jsxComment Error
 highlight def link jsxAttrib Identifier
 highlight def link jsxEscapeJs jsxEscapeJs
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
+" linter autofix
+let g:ale_fixers = {
+\   'javascript': ['prettier', 'eslint'],
+\}
+let g:ale_linters = {
+\   'javascript': ['prettier', 'eslint'],
+\}
+
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_fix_on_save = 1
+" let g:ale_sign_column_always = 1
+" let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_enter = 0
