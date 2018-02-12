@@ -27,6 +27,7 @@ Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " 自動完成
 Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
 Plug 'maxmellon/vim-jsx-pretty'
 " Plug 'w0rp/ale' " linter error and fix
+Plug 'wangchou/vim-auto-highlight'
 
 
 call plug#end()
@@ -242,3 +243,6 @@ let g:ale_lint_on_enter = 0
 
 " nerdtree width
 let g:NERDTreeWinSize=50
+
+" for vim-auto-hightlight
+set updatetime=500
