@@ -26,7 +26,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " 自動完成
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " 自動完成
 Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'w0rp/ale' " linter error and fix
+" Plug 'w0rp/ale' " linter error and fix
 
 
 call plug#end()
@@ -63,7 +63,7 @@ let mapleader = ","
 nmap <leader>q :bp <BAR> bd #<CR>
 nmap <leader>l :b#<CR>
 nmap <leader>bl :ls<CR>:b<Space>
-map <leader>, :BuffergatorTabsOpen<CR>
+map <leader>, :BuffergatorTabsToggle<CR>
 
 " search
 nnoremap <leader>k :Ack! <C-R><C-W> <CR>
@@ -168,6 +168,9 @@ nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 " close the quickfix window after selection
 :autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
+" filetype for objc files
+let g:filetype_h = 'objc'
+let g:filetype_m = 'objc'
 
 " ====== 插件設定 ======
 " --- 狀態列設定 (vim-airline) ---
@@ -230,9 +233,12 @@ let g:ale_linters = {
 \   'javascript': ['prettier', 'eslint'],
 \}
 
-let g:airline#extensions#ale#enabled = 1
+" let g:airline#extensions#ale#enabled = 1
 
-let g:ale_fix_on_save = 1
+" let g:ale_fix_on_save = 1
 " let g:ale_sign_column_always = 1
-" let g:ale_lint_on_text_changed = 'never'
-" let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+
+" nerdtree width
+let g:NERDTreeWinSize=50
