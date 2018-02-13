@@ -14,7 +14,8 @@ nnoremap zo :xccmd unfold<cr>
 " search under cursor
 map ,k viw:xccmd findSelectedTextInWorkspace<CR>
 
-map ,, :xcmenucmd Show Related Items<CR>
+map ,, :xcmenucmd Show Document Items<CR>
+map ,r :xcmenucmd Show Related Items<CR>
 
 nmap > >>
 nmap < <<
