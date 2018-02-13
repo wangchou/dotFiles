@@ -1,0 +1,29 @@
+" Toggle Toolbars
+nmap ,<left> :xccmd toggleNavigatorsVisibility<CR>
+nmap ,<down> :xccmd toggleDebuggerVisibility<CR>
+nmap ,<right> :xccmd toggleUtilitiesVisibility<CR>
+
+nmap ,. :xccmd jumpToNextCounterpart<CR>
+nmap ,j :xccmd jumpToDefinition<CR>
+nmap ,c :xcmenucmd Find Call Hierarchy<CR>
+
+" fold
+nnoremap zc :xccmd fold<cr>
+nnoremap zo :xccmd unfold<cr>
+
+" search under cursor
+map ,k viw:xccmd findSelectedTextInWorkspace<CR>
+
+map ,, :xcmenucmd Show Related Items<CR>
+
+nmap > >>
+nmap < <<
+
+" Other key binding by setting Xcode directly
+" ctrl + o: open quickly
+" cmd + ]: go forward
+" cmd + [: go back
+" cmd + enter: go to next focus area
+" cmd + f: find
+" cmd + shift + f: find in project
+" option + mouse click: open document
