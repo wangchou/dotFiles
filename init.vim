@@ -1,34 +1,45 @@
 set nocompatible " 設定不和舊 vi 相容，開啟 vim 進階功能支援(ps: neovim 不需要這行)
 
+
 " --- 插件管理 (set up vim-plug) ---
-call plug#begin('~/.config/nvim/autoload')
+call plug#begin('~/.config/nvim/plugins')
 
 " 把 vim 變好看
 Plug 'reewr/vim-monokai-phoenix' " 仿 sublime 的配色
 Plug 'vim-airline/vim-airline' " 強大的狀態列
 Plug 'vim-airline/vim-airline-themes'
+Plug 'wangchou/vim-auto-highlight' " highlight all occurrences of the current word
 
 " 程式編輯器設定
 Plug 'scrooloose/nerdtree' " 檔案列表
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'kien/ctrlp.vim' " 快速開檔
-Plug 'christoomey/vim-tmux-navigator' " 用同樣方式切換同畫面 tmux/vim tab
+Plug 'tpope/vim-fugitive' " git in vim
+Plug 'christoomey/vim-tmux-navigator' " 用同樣方式(ctrl+方向鍵)切換同畫面 tmux/vim tab
+Plug 'jeetsukumaran/vim-buffergator' " nerdtree like buffer navigator
+Plug 'mileszs/ack.vim' " faster search
+Plug 'vim-scripts/delview' " remove current views created by mkview
+
+Plug 'ludovicchabant/vim-gutentags' " 開檔案就自動建tags
+Plug 'majutsushi/tagbar' " 用<leader>t來顯示檔案中的tags結構
+
+" JS/CSS
 Plug 'pangloss/vim-javascript' " javascript 語法和縮排的插件
+Plug 'cakebaker/scss-syntax.vim' " SCSS 支援
+" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " 自動完成
+" Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
+" Plug 'maxmellon/vim-jsx-pretty'
+
+" C/C++
 Plug 'jez/vim-c0' " C++ 支援
 Plug 'jez/vim-ispc' " C 語言支援
-Plug 'cakebaker/scss-syntax.vim' " SCSS 支援
-Plug 'edkolev/tmuxline.vim' " 把 tmux 列融入 vim
-Plug 'mileszs/ack.vim' " faster search
-Plug 'jeetsukumaran/vim-buffergator' " nerdtree like buffer navigator
-Plug 'vim-scripts/delview'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " 自動完成
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " 自動完成
-Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
-Plug 'maxmellon/vim-jsx-pretty'
-" Plug 'w0rp/ale' " linter error and fix
-Plug 'wangchou/vim-auto-highlight'
 
+" Swift
+Plug 'keith/swift.vim'
+
+" Python
+Plug 'davidhalter/jedi-vim' " Python go to definition
 
 call plug#end()
 
@@ -41,6 +52,7 @@ call plug#end()
 "
 " ,k        用 cursor 下的字做全域搜尋
 " ,a        全域搜尋
+" ,t        顯示檔案結構(by ctag)
 "
 " ctrl + o  搜尋檔名
 " ctrl + f  搜尋最近的檔案
@@ -63,8 +75,8 @@ let mapleader = ","
 " buffer
 nmap <leader>q :bp <BAR> bd #<CR>
 nmap <leader>l :b#<CR>
-nmap <leader>bl :ls<CR>:b<Space>
-map <leader>, :BuffergatorTabsToggle<CR>
+nmap <leader>, :ls<CR>:b<Space>
+" map <leader>, :BuffergatorTabsToggle<CR>
 
 " search
 nnoremap <leader>k :Ack! <C-R><C-W> <CR>
@@ -72,7 +84,7 @@ vnoremap <leader>k y:Ack! <C-R>"<CR>
 nnoremap <leader>a :Ack! --smart-case -m 30<space>
 
 " open file
-nnoremap <C-o> :CtrlP<CR>
+"nnoremap <C-o> :CtrlP<CR>
 nnoremap <C-f> :CtrlPMRUFiles<CR>
 nmap <leader>j :CtrlP<CR><C-\>w
 
@@ -91,15 +103,24 @@ nmap <space> :NERDTreeToggle<CR>
 nnoremap <tab> <C-W><C-W>
 inoremap jj <Esc>
 
+" Settings in iterm2
+" https://stackoverflow.com/a/46018502/2797799
+" cmd + [    -> \<C-O>     // jump to previous location
+" cmd + ]    -> \<C-I>     // jump to next location
+" dmd + Down -> <leader>d  // jedi: go to definition
+
 " ====== vim 設定 ======
-" 用 tab = 2 space 縮排
-set tabstop=2 shiftwidth=2 expandtab
+" 用 tab = 4 space 縮排
+set tabstop=4
+set shiftwidth=4
+set expandtab
 set cindent
 set smarttab
-set softtabstop=2
+set softtabstop=4
 set showcmd " 顯示目前 cmd 狀態 (ex: 選了幾行)
 set splitbelow " 畫面水平時切割放在下方
 set number " 讓人快速的上下移動 打行數 + j or k
+set smartindent
 
 " 禁用方向鍵
 map <left> <nop>
@@ -173,12 +194,38 @@ nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 let g:filetype_h = 'objc'
 let g:filetype_m = 'objc'
 
+" use <Leader>h to hide status bar
+" https://unix.stackexchange.com/a/140899
+let s:hidden_all = 0
+function! ToggleHiddenAll()
+    if s:hidden_all  == 0
+        let s:hidden_all = 1
+        set noshowmode
+        set noruler
+        set laststatus=0
+        set noshowcmd
+"        set nonumber
+        hi EndOfBuffer ctermfg=235
+    else
+        let s:hidden_all = 0
+        set showmode
+        set ruler
+        set laststatus=2
+        set showcmd
+        set number
+        hi EndOfBuffer ctermfg=100
+    endif
+endfunction
+
+"nnoremap <S-h> :call ToggleHiddenAll()<CR>
+nnoremap <Leader>h :call ToggleHiddenAll()<CR>
+
 " ====== 插件設定 ======
 " --- 狀態列設定 (vim-airline) ---
 let g:airline#extensions#hunks#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 0
 let g:airline#extensions#branch#enabled = 1
-let g:airline_powerline_fonts=1
+let g:airline_powerline_fonts=0
 let g:airline_section_x=0
 let g:airline_section_y=0
 let g:airline_section_error=0
@@ -204,10 +251,12 @@ let g:buffergator_split_size = 30 " buffer window width
 
 " 按「leader key + ...」做...
 " go to definition
-nnoremap <leader>d :TernDef<CR>|
+" nnoremap <leader>d :TernDef<CR>|
 
 " rename variable under cursor
-nnoremap <leader>r :TernRename<CR>
+" nnoremap <leader>r :TernRename<CR>
+
+
 
 " vim-jsx-pretty highlight jsx like html
 let g:vim_jsx_pretty_enable_jsx_highlight = 0
@@ -242,7 +291,74 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 
 " nerdtree width
-let g:NERDTreeWinSize=50
+let g:NERDTreeWinSize=30
 
 " for vim-auto-hightlight
 set updatetime=500
+
+
+" for tagbar
+let g:buffergator_suppress_keymaps=1
+nmap <leader>t :TagbarToggle<CR>
+
+let g:tagbar_type_javascript = {'ctagsbin': 'jsctags'}
+
+" from https://github.com/majutsushi/tagbar/wiki#obj-c
+" add a definition for Objective-C to tagbar
+let g:tagbar_type_objc = {
+    \ 'ctagstype' : 'ObjectiveC',
+    \ 'kinds'     : [
+        \ 'i:interface',
+        \ 'I:implementation',
+        \ 'p:Protocol',
+        \ 'm:Object_method',
+        \ 'c:Class_method',
+        \ 'v:Global_variable',
+        \ 'F:Object field',
+        \ 'f:function',
+        \ 'p:property',
+        \ 't:type_alias',
+        \ 's:type_structure',
+        \ 'e:enumeration',
+        \ 'M:preprocessor_macro',
+    \ ],
+    \ 'sro'        : ' ',
+    \ 'kind2scope' : {
+        \ 'i' : 'interface',
+        \ 'I' : 'implementation',
+        \ 'p' : 'Protocol',
+        \ 's' : 'type_structure',
+        \ 'e' : 'enumeration'
+    \ },
+    \ 'scope2kind' : {
+        \ 'interface'      : 'i',
+        \ 'implementation' : 'I',
+        \ 'Protocol'       : 'p',
+        \ 'type_structure' : 's',
+        \ 'enumeration'    : 'e'
+    \ }
+    \ }
+
+" swift-autocomplete
+" autocmd BufNewFile,BufRead *.swift set filetype=swift
+"autocomplete_swift#use_toolchain('Swift_4_2')
+"
+
+" crontab
+autocmd filetype crontab setlocal nobackup nowritebackup
+"set expandtab
+
+autocmd FileType javascript set tabstop=4|set shiftwidth=4|set softtabstop=4|set expandtab
+
+" jedi
+let g:jedi#completions_enabled = 0
+let g:jedi#show_call_signatures = 0
+
+" ctag
+let g:gutentags_ctags_executable = '/opt/homebrew/Cellar/universal-ctags/HEAD-6f4a48a/bin/ctags'
+" https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
+let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')
