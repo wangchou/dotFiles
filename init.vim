@@ -1,6 +1,5 @@
 set nocompatible " 設定不和舊 vi 相容，開啟 vim 進階功能支援(ps: neovim 不需要這行)
 
-
 " --- 插件管理 (set up vim-plug) ---
 call plug#begin('~/.config/nvim/plugins')
 
@@ -27,9 +26,6 @@ Plug 'majutsushi/tagbar' " 用<leader>t來顯示檔案中的tags結構
 " JS/CSS
 Plug 'pangloss/vim-javascript' " javascript 語法和縮排的插件
 Plug 'cakebaker/scss-syntax.vim' " SCSS 支援
-" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " 自動完成
-" Plug 'ternjs/tern_for_vim' " 自動完成背後的 JS Engine
-" Plug 'maxmellon/vim-jsx-pretty'
 
 " C/C++
 Plug 'jez/vim-c0' " C++ 支援
@@ -38,8 +34,10 @@ Plug 'jez/vim-ispc' " C 語言支援
 " Swift
 Plug 'keith/swift.vim'
 
-" Python
-Plug 'davidhalter/jedi-vim' " Python go to definition
+" https://github.com/clangd/coc-clangd objc
+" https://github.com/fannheyward/coc-pyright python
+" https://github.com/josa42/coc-sh shell
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
@@ -47,8 +45,8 @@ call plug#end()
 " , 當 vim 的 leader key
 "
 " ,q        關掉當前 buffer
-" ,l        到前一個 buffer
-" ,,       顯示 buffer 列表
+" ,l        顯示 buffer 列表
+" ,,        go to alternative file
 "
 " ,k        用 cursor 下的字做全域搜尋
 " ,a        全域搜尋
@@ -69,14 +67,28 @@ call plug#end()
 " tab       切換到下個 window
 "
 " jj        回到 normal mode
+"
+" 來自coc.nvim
+" gd        go to definition
+" gr        coc-references
+"
+" iterm2的設定
+" https://stackoverflow.com/a/46018502/2797799
+" cmd + [    -> \<C-O>     // 跳到前個位置 in nvim jump list
+" cmd + ]    -> \<C-I>     // 跳到下個位置 in nvim jump list
+"
 
 let mapleader = ","
 
 " buffer
 nmap <leader>q :bp <BAR> bd #<CR>
-nmap <leader>l :b#<CR>
-nmap <leader>, :ls<CR>:b<Space>
-" map <leader>, :BuffergatorTabsToggle<CR>
+" nmap <leader>l :b#<CR>
+nmap <leader>l :ls<CR>:b<Space>
+" previous buffer
+nmap <leader>, <C-^><CR>
+" next buffer
+nmap <leader>. :bn<CR>
+" map <leader>b :BuffergatorTabsToggle<CR>
 
 " search
 nnoremap <leader>k :Ack! <C-R><C-W> <CR>
@@ -84,7 +96,7 @@ vnoremap <leader>k y:Ack! <C-R>"<CR>
 nnoremap <leader>a :Ack! --smart-case -m 30<space>
 
 " open file
-"nnoremap <C-o> :CtrlP<CR>
+nnoremap <C-o> :CtrlP<CR>
 nnoremap <C-f> :CtrlPMRUFiles<CR>
 nmap <leader>j :CtrlP<CR><C-\>w
 
@@ -103,11 +115,29 @@ nmap <space> :NERDTreeToggle<CR>
 nnoremap <tab> <C-W><C-W>
 inoremap jj <Esc>
 
-" Settings in iterm2
-" https://stackoverflow.com/a/46018502/2797799
-" cmd + [    -> \<C-O>     // jump to previous location
-" cmd + ]    -> \<C-I>     // jump to next location
-" dmd + Down -> <leader>d  // jedi: go to definition
+" coc.nvim
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" coc.nvim 隱藏 signcolumn
+" https://github.com/neoclide/coc.nvim/issues/1554#issuecomment-586622147
+autocmd BufRead,BufNewFile * setlocal signcolumn=no
+autocmd BufRead,BufNewFile * highlight clear SignColumn
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
 
 " ====== vim 設定 ======
 " 用 tab = 4 space 縮排
@@ -350,15 +380,11 @@ autocmd filetype crontab setlocal nobackup nowritebackup
 
 autocmd FileType javascript set tabstop=4|set shiftwidth=4|set softtabstop=4|set expandtab
 
-" jedi
-let g:jedi#completions_enabled = 0
-let g:jedi#show_call_signatures = 0
-
 " ctag
 let g:gutentags_ctags_executable = '/opt/homebrew/Cellar/universal-ctags/HEAD-6f4a48a/bin/ctags'
 " https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
 let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')
-let g:gutentags_generate_on_new = 1
-let g:gutentags_generate_on_missing = 1
-let g:gutentags_generate_on_write = 1
+"let g:gutentags_generate_on_new = 1
+"let g:gutentags_generate_on_missing = 1
+"let g:gutentags_generate_on_write = 1
 command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')
