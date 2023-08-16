@@ -19,6 +19,7 @@ Plug 'christoomey/vim-tmux-navigator' " 用同樣方式(ctrl+方向鍵)切換同
 Plug 'jeetsukumaran/vim-buffergator' " nerdtree like buffer navigator
 Plug 'mileszs/ack.vim' " faster search
 Plug 'vim-scripts/delview' " remove current views created by mkview
+Plug 'embear/vim-localvimrc' " local vimrc file for shortcut to run scripts
 
 Plug 'ludovicchabant/vim-gutentags' " 開檔案就自動建tags
 Plug 'majutsushi/tagbar' " 用<leader>t來顯示檔案中的tags結構
@@ -71,6 +72,7 @@ call plug#end()
 " 來自coc.nvim
 " gd        go to definition
 " gr        coc-references
+" ,d        CocDiagnostics
 "
 " iterm2的設定
 " https://stackoverflow.com/a/46018502/2797799
@@ -125,6 +127,10 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 autocmd BufRead,BufNewFile * setlocal signcolumn=no
 autocmd BufRead,BufNewFile * highlight clear SignColumn
 
+" Coc config/diagnostics
+"nmap <leader>c :CocConfig
+nmap <leader>d :CocDiagnostics
+
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -151,6 +157,7 @@ set showcmd " 顯示目前 cmd 狀態 (ex: 選了幾行)
 set splitbelow " 畫面水平時切割放在下方
 set number " 讓人快速的上下移動 打行數 + j or k
 set smartindent
+set autochdir
 
 " 禁用方向鍵
 map <left> <nop>
@@ -326,6 +333,9 @@ let g:NERDTreeWinSize=30
 " for vim-auto-hightlight
 set updatetime=500
 
+" localvimrc
+let g:localvimrc_ask = 0
+let g:localvimrc_sandbox = 0
 
 " for tagbar
 let g:buffergator_suppress_keymaps=1

@@ -1,4 +1,4 @@
-# VIM-as-a-JS-IDE-for-Mac
+# dotFiles
 
 ### Color scheme Setting
 iTerm2
